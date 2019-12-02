@@ -2,16 +2,911 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>邻舍网络 github站点</title>
+    <title>大V神器</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <script src="/layer/layer.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body>
-  这是一个github站点
-    <a href="https://github.com/lesvac/lesvac.github.io/blob/master/test.md" >test.md</a>
-    如何创建一个个人网站？
-kkk
+<body style="background: rgb(254, 254, 254);" oncontextmenu="return false;" onselectstart="return false">
+<ul class="layui-nav layui-bg-molv">
+    <li class="layui-nav-item  layui-this">
+        <a href="javascript:changeTab('home');">首页</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:changeTab('account');">帐号管理</a>
+    </li>
+
+    <li class="layui-nav-item">
+        <a href="javascript:changeTab('article');">内容管理</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:changeTab('wb');">指定微博</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:changeTab('setup');">设置</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:changeTab('notice');">声明</a>
+    </li>
+
+    <li class="layui-nav-item">
+        <a href="javascript:changeTab('service');">客服</a>
+    </li>
+
+    <li class="layui-nav-item">
+        <a href="javascript:login();">登录</a>
+    </li>
+
+    <li class="layui-nav-item">
+        <a href="javascript:changeTab('lab');">实验室</a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:loginWb();;">微博登录</a></dd>
+            <dd><a href="javascript:sendWb();">发一条微博</a></dd>
+            <dd><a href="javascript:likeWb();">点赞</a></dd>
+            <dd><a href="javascript:commentWb();">评论</a></dd>
+            <dd><a href="javascript:forwardWb();">转发</a></dd>
+            <dd><a href="javascript:addTask();">添加一条任务</a></dd>
+        </dl>
+    </li>
+
+    <li class="layui-nav-item">
+        <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;">修改信息</a></dd>
+            <dd><a href="javascript:;">安全管理</a></dd>
+            <dd><a href="javascript:;">退了</a></dd>
+        </dl>
+    </li>
+</ul>
+
+<div style="background: #ee5b03;height:3px;width:100%;margin:0px;" ></div>
+<div style="width:98%;height: auto;margin: auto;margin-top: 5px;">
+    <!--    <div class="layui-progress  layui-progress-big" style="margin-bottom: 5px;" lay-showPercent="yes">-->
+    <!--        <div class="layui-progress-bar layui-bg-red" lay-percent="30%">任务进度</div>-->
+    <!--    </div>-->
+    <form class="layui-form layui-form-pane" action="">
+
+        <div class="layui-tab" style="margin-top:0px;" lay-filter="demo">
+            <ul class="layui-tab-title" style="display: none;">
+                <li class="layui-this" lay-id="home">首页</li>
+                <li lay-id="account">帐号管理</li>
+                <li lay-id="article">内容管理</li>
+                <li lay-id="wb">指定微博</li>
+                <li lay-id="setup">设置</li>
+                <li lay-id="service">客服</li>
+                <li lay-id="notice">声明</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header"><strong>任务状态</strong></div>
+                        <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10">
+                                <div class="layui-col-md3">
+                                    <table>
+                                        <tr>
+                                            <td style="padding-top:5px;">评论任务:</td>
+                                            <td><input lay-filter="comment_task" type="checkbox" name="comment_task" value="1" lay-skin="switch" checked="checked" lay-text="进行中 点击停止|已停止 点击开始" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <table>
+                                        <tr>
+                                            <td style="padding-top:5px;">转发状态:</td>
+                                            <td><input lay-filter="forward_task" type="checkbox" name="forward_task" value="1" lay-skin="switch" lay-text="进行中 点击停止|已停止 点击开始"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <table>
+                                        <tr>
+                                            <td style="padding-top:5px;">发布状态:</td>
+                                            <td><input lay-filter="weibo_task" type="checkbox" name="weibo_task" lay-skin="switch" lay-text="进行中 点击停止|已停止 点击开始"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <table>
+                                        <tr>
+                                            <td style="padding-top:5px;">点赞状态:</td>
+                                            <td><input lay-filter="like_task" type="checkbox" name="like_task" lay-skin="switch" lay-text="进行中 点击停止|已停止 点击开始"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header"><strong>统计数据</strong></div>
+                        <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10">
+                                <div class="layui-col-md3">
+                                    微博帐号数：3
+                                </div>
+                                <div class="layui-col-md3">
+                                    已发布微博：3
+                                </div>
+                                <div class="layui-col-md3">
+                                    已点赞：3
+                                </div>
+                                <div class="layui-col-md3">
+                                    已评论：3
+                                </div>
+                            </div>
+                            <div class="layui-row layui-col-space10">
+                                <div class="layui-col-md3">
+                                    好友数：3
+                                </div>
+                                <div class="layui-col-md3">
+                                    已转发：3
+                                </div>
+                                <div class="layui-col-md3">
+                                    帐户余额：3
+                                </div>
+                                <div class="layui-col-md3">
+                                    会员到期：3
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-tab-item">
+                    <div>
+                        <button class="layui-btn " onclick="addAccount();">添加帐号</button>
+                    </div>
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>微博帐号</th>
+                            <th>微博密码</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="account_tb">
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="layui-tab-item">
+                    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">微博</li>
+                            <li>评论</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div>
+                                    <button class="layui-btn " onclick="addContent();">添加微博内容</button>
+                                    <table class="layui-table">
+                                        <colgroup>
+                                            <col width="150">
+                                            <col width="200">
+                                            <col>
+                                        </colgroup>
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>内容</th>
+                                            <th>状态</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="content_weibo_tb">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div>
+                                    <button class="layui-btn " onclick="addComment();">添加评论内容</button>
+                                    <table class="layui-table">
+                                        <colgroup>
+                                            <col width="150">
+                                            <col width="200">
+                                            <col>
+                                        </colgroup>
+                                        <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>内容</th>
+                                            <th>状态</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="content_comment_tb">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div>
+                        <button class="layui-btn " onclick="addWeiboUrl();">添加微博链接</button>
+                    </div>
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="150">
+                            <col width="200">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>微博链接</th>
+                            <th>微博ID</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                        <tbody id="weibo_url_tb">
+                        </tbody>
+                    </table>
+                    在电脑浏览器，打开微博，在要添加的微博点时间，打开此微博详情页，复制浏览器的地址栏里的地址，再粘贴到这里进行添加
+                </div>
+                <div class="layui-tab-item">
+                    <form class="layui-form" action="">
+                        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">打码设置</li>
+                                <li>拨号设置</li>
+                                <!--                        <li>VPN设置</li>-->
+                                <!--                        <li>VPS设置</li>-->
+                                <!--                        <li>超话</li>-->
+                                <li>微博</li>
+                                <li>评论</li>
+                                <li>全局</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">打码平台</label>
+                                        <div class="layui-input-block">
+                                            <select name="dama" lay-verify="required">
+                                                <option value=""></option>
+                                                <option value="0">联众打码</option>
+                                                <option value="1">码人打码</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">帐号</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">辅助文字</div>
+                                    </div>
+
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">链接名称</label>
+                                        <div class="layui-input-block">
+                                            <select name="dama" lay-verify="required">
+                                                <option value=""></option>
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">宽带帐号</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">宽带密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">辅助文字</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">VPN地址</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">断线延时</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="glob_redial" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">秒</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit lay-filter="formDemo">创建VPN</button>
+                                            <button class="layui-btn" lay-submit lay-filter="formDemo">拨号测试</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--                        <div class="layui-tab-item">-->
+                                <!--                            3-->
+                                <!--                        </div>-->
+                                <div class="layui-tab-item">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">每发布</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" onblur="updateConfig('weibo_send_delay',this)" id="weibo_send_delay" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">条换IP</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">每发布</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" onblur="updateConfig('weibo_chang_ip',this)" id="weibo_chang_ip" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">条换号</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">发布延时</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" onblur="updateConfig('weibo_chang_account',this)" id="weibo_chang_account" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">秒</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">处理后</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" lay-filter="weibo_del_after" name="weibo_del_after" value="del" title="删除内容">
+                                            <input type="radio" lay-filter="weibo_del_after" name="weibo_del_after" value="notdel" title="不删除" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">每处理</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" onblur="updateConfig('comment_send_delay',this)" name="comment_send_delay" id="comment_send_delay" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">条换IP</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">每处理</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" onblur="updateConfig('comment_chang_ip',this)" id="comment_chang_ip" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">条换号</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">处理延时</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" onblur="updateConfig('comment_chang_account',this)" id="comment_chang_account" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">秒</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">处理后</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" lay-filter="comment_del_after" name="comment_del_after" value="del" title="删除内容">
+                                            <input type="radio" lay-filter="comment_del_after" name="comment_del_after" value="notdel" title="不删除" checked>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="layui-tab-item">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">每发布</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="glob_chang_ip" onblur="updateConfig('glob_chang_ip',this);" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">条换IP</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">每发布</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="glob_chang_account" onblur="updateConfig('glob_chang_account',this);" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">条换号</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">发布延时</label>
+                                        <div class="layui-input-inline">
+                                            <input type="number" max="60" id="glob_send_delay" onblur="updateConfig('glob_send_delay',this);" required lay-verify="required" placeholder="请输入延时时间" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">秒</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">处理后</label>
+                                        <div class="layui-input-block1">
+                                            <input type="radio" lay-filter="glob_del_after" name="glob_del_after" value="del" title="删除内容">
+                                            <input type="radio" lay-filter="glob_del_after" name="glob_del_after" value="notdel" title="不删除" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--                        <div class="layui-tab-item">-->
+                                <!--                            7-->
+                                <!--                        </div>-->
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">客服QQ:68245408</div>
+                <div class="layui-tab-item">
+                    软件(及辅助包工具)使用协议<br />
+
+                    本软件，即本网站所提供下载系列软件为本人在业余时间开发，以低价格提供给注册用户。功能包含：微博推广辅助,例:发微博,评论,私信,关注等功能。
+                    <br />
+                    以下为使用该软件详细协议：
+                    <br />
+                    1：禁止发送不健康的信息。如某某视频脱衣舞，低俗，色情，骗人信息等。
+                    <br />
+                    2：禁止发送辱骂他人、侮辱中华人民共和国等文字或是链接等。
+                    <br />
+                    3：禁止到恶意宣传某某网站等消息，尤其是指一些含有病毒、木马等可恶的网站。
+                    <br />
+                    4、禁止影响到他人网站，他人聊天工具的使用。
+                    <br />
+                    5、不得用本软件发布违法违规信息，一切由用户使用产生的后果及责任由使用者自行承担。
+                    <br />
+
+                    软件只是减轻人们的重复工作量，从而提高工作效率。
+                    <br />
+                    请勿在其他地方随意下载，避免病毒、木马感染您的系统。
+                    <br />
+                    禁止破解、擅改本站原创工具，否则我们会收集各种信息提交给相关机构，追究您的法律责任。
+                    <br />
+                    请遵守中华人民共和国法律，若用户违法使用产生的一切后果与软件作者无关。
+                    <br />
+                    因网络软件依赖于被操作网站，若网站升级，本站承诺在能力范围之内，免费升级；
+                    <br />
+                    本站诚信经营，绝不夸大软件功能及欺骗客户购买。如若对软件有疑问，请详细咨询客服后再决定是否购买；
+                    <br />
+                    采用帐号密码授权，用户可以在任一台电脑上使用（但同一时间只能允许在一台电脑上运行），免费提供技术支持；
+                    <br />
+                    继续使用本软件则表示同意以上协议。
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="__STATIC__/js/layui.all.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/javascript">
+    const { ipcRenderer } = require("electron");
+    var superagent = require('superagent');
+    var new_version="0.0001";//新版本
+    var new_version_url="https://www.linshe.ink/updata.zip";
+
+    closeWin=function() {
+        //alert("close btn clicked!");
+        ipcRenderer.send("closeWin");
+    }
+    maxWin=function() {
+        //alert("close btn clicked!");
+        ipcRenderer.send("maxWin");
+    }
+    minWin=function() {
+        //alert("close btn clicked!");
+        ipcRenderer.send("minWin");
+    }
+
+    loginWb=function(){
+        ipcRenderer.send("loginWb");
+    }
+    sendWb=function(){
+        ipcRenderer.send("sendWb");
+    }
+
+    likeWb=function(){
+        ipcRenderer.send("likeWb");
+    }
+
+    commentWb=function(){
+        ipcRenderer.send("commentWb");
+    }
+
+    forwardWb=function(){
+        ipcRenderer.send("forwardWb");
+    }
+
+    midWb=function(){
+        ipcRenderer.send("midWb",document.getElementById("wburl").value);
+    }
+
+    ipcRenderer.on('login', function(event, arg) {
+        console.log(arg); // prints "pong"
+        layer.open({
+            title: '会员登录'
+            ,content: '微博帐号：<input type="text" id="account" /><br />微博密码：<input type="text" id="pwd" />'
+            ,yes:function (index,layero) {
+                console.log($("#account").val())
+                console.log($("#pwd").val())
+                $.ajax({
+                    url:"https://www.linshe.ink/electron/addAccount",
+                    type:'POST',
+                    data:{account:$("#account").val(),pwd:$("#pwd").val()},
+                    success:function (data) {
+                        console.log(data);
+                        // alert(data.msg)
+                        //location.reload();
+                        layer.close(index);
+                    }
+                });
+
+                // request('https://www.linshe.ink', function (err, response, body) {
+                //     console.log(body)
+                //     layer.close(index);
+                // });
+            }
+        });
+    });
+
+    ipcRenderer.on('accountList', function(event, arg) {
+        console.log(arg[0]['account']); // prints "pong"
+        $("#account_tb").html();
+        var rows="";
+        for(var i=0;i<arg.length;i++){
+            rows+="<tr><td>"+arg[i]['id']
+                +"</td><td>"+arg[i]['account']
+                +"</td><td>"+arg[i]['pwd']
+                +"</td><td><button class='layui-btn layui-btn-sm' lay-event='delete'>删除</button>" +
+                "    <button class='layui-btn layui-btn-sm' lay-event='update'>编辑</button></td></tr>";
+        }
+        // console.log(rows);
+        $("#account_tb").html(rows);
+    });
+
+    ipcRenderer.on('contentList', function(event, arg) {
+        console.log(arg); // prints "pong"
+        var tableid="content_weibo_tb";
+        if(arg.type=="0")
+            tableid="content_weibo_tb";
+        else
+            tableid="content_comment_tb";
+        $("#"+tableid).html();
+        var rows="";
+        for(var i=0;i<arg.list.length;i++){
+            rows+="<tr><td>"+arg.list[i]['id']+"</td><td>"+arg.list[i]['content']+"</td><td>"+arg.list[i]['type']+"</td></tr>";
+        }
+        // console.log(rows);
+        $("#"+tableid).html(rows);
+
+    });
+
+    ipcRenderer.on('weiboUrlList', function(event, arg) {
+        console.log(arg); // prints "pong"
+        var tableid="weibo_url_tb";
+
+        $("#"+tableid).html();
+        var rows="";
+        for(var i=0;i<arg.length;i++){
+            rows+="<tr><td>"+arg[i]['id']+"</td><td><input size='70' readonly='readonly' type='text' value='"+arg[i]['url']+"' /></td><td>"+arg[i]['mid']+"</td><td>"+arg[i]['status']+"</td></tr>";
+        }
+        // console.log(rows);
+        $("#"+tableid).html(rows);
+
+    });
+
+    ipcRenderer.on('configList', function(event, arg) {
+        console.log(arg); // prints "pong"
+        var config={};
+        for(var i=0;i<arg.length;i++){
+            config[arg[i].item]=arg[i].value;
+        }
+        $("#glob_send_delay").val(config['glob_send_delay']);
+        $("#glob_chang_ip").val(config['glob_chang_ip']);
+        $("#glob_chang_account").val(config['glob_chang_account']);
+
+        $("#comment_send_delay").val(config['comment_send_delay']);
+        $("#comment_chang_ip").val(config['comment_chang_ip']);
+        $("#comment_chang_account").val(config['comment_chang_account']);
+
+        $("#weibo_send_delay").val(config['weibo_send_delay']);
+        $("#weibo_chang_ip").val(config['weibo_chang_ip']);
+        $("#weibo_chang_account").val(config['weibo_chang_account']);
+
+        layui.use('form', function () {
+            var $ = layui.jquery, form = layui.form;
+            $("input[name=glob_del_after][value=del]").attr("checked", config['glob_del_after'] == "del" ? true : false);
+            $("input[name=glob_del_after][value=notdel]").attr("checked", config['glob_del_after'] == "notdel" ? true : false);
+            $("input[name=comment_del_after][value=del]").attr("checked", config['comment_del_after'] == "del" ? true : false);
+            $("input[name=comment_del_after][value=notdel]").attr("checked", config['comment_del_after'] == "notdel" ? true : false);
+            $("input[name=weibo_del_after][value=del]").attr("checked", config['weibo_del_after'] == "del" ? true : false);
+            $("input[name=weibo_del_after][value=notdel]").attr("checked", config['weibo_del_after'] == "notdel" ? true : false);
+            $("input[name=comment_task]").attr("checked", config['comment_task'] == "1" ? true : false);
+            $("input[name=forward_task]").attr("checked", config['forward_task'] == "1" ? true : false);
+            $("input[name=weibo_task]").attr("checked", config['weibo_task'] == "1" ? true : false);
+            $("input[name=like_task]").attr("checked", config['like_task'] == "1" ? true : false);
+
+            form.render();
+        });
+
+    });
+
+    ipcRenderer.on('addAccountSuccess', function(event, arg) {
+        ipcRenderer.send("readAccount","");
+    });
+    ipcRenderer.on('addContentSuccess', function(event, arg) {
+        ipcRenderer.send("readContent",arg);
+    });
+    ipcRenderer.on('addWeiboUrlSuccess', function(event, arg) {
+        ipcRenderer.send("readWeiboUrl",arg);
+    });
+
+    $(document).ready(function(){
+        ipcRenderer.send("readAccount","0");
+        ipcRenderer.send("readContent","0");
+        ipcRenderer.send("readContent","1");
+        ipcRenderer.send("readWeiboUrl","");
+        ipcRenderer.send("readConfigList","");
+        ipcRenderer.send("dataInit",{new_version:0.0002,new_version_url:"https://www.linshe.ink/updata.zip"});
+
+        layui.use('form', function(){
+            var form = layui.form;
+            form.on('radio(glob_del_after)', function (data) {
+                console.log(data)
+                var option={};
+                option.item="glob_del_after";
+                option.value=data.value;
+                ipcRenderer.send("updateConfig",option);
+            });
+
+            form.on('radio(comment_del_after)', function (data) {
+                var option={};
+                option.item="comment_del_after";
+                option.value=data.value;
+                ipcRenderer.send("updateConfig",option);
+            });
+            form.on('radio(weibo_del_after)', function (data) {
+                console.log(data);
+                var option={};
+                option.item="weibo_del_after";
+                option.value=data.value;
+                ipcRenderer.send("updateConfig",option);
+            });
+
+            form.on('switch(comment_task)', function(data){
+                // console.log(data);
+                // console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //开关是否开启，true或者false
+                // console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                // console.log(data.othis); //得到美化后的DOM对象
+                var option={};
+                option.item="comment_task";
+                option.value=data.elem.checked? "1":"0";
+                ipcRenderer.send("updateConfig",option);
+                ipcRenderer.send("addTask",{"taskname":"comment_task"});
+            });
+
+            form.on('switch(forward_task)', function(data){
+                // console.log(data);
+                // console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //开关是否开启，true或者false
+                // console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                // console.log(data.othis); //得到美化后的DOM对象
+                var option={};
+                option.item="forward_task";
+                option.value=data.elem.checked? "1":"0";
+                ipcRenderer.send("updateConfig",option);
+                ipcRenderer.send("addTask",{"taskname":"forward_task"});
+            });
+
+            form.on('switch(weibo_task)', function(data){
+                // console.log(data);
+                // console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //开关是否开启，true或者false
+                // console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                // console.log(data.othis); //得到美化后的DOM对象
+                var option={};
+                option.item="weibo_task";
+                option.value=data.elem.checked? "1":"0";
+                ipcRenderer.send("updateConfig",option);
+                ipcRenderer.send("addTask",{"taskname":"weibo_task"});
+            });
+
+            form.on('switch(like_task)', function(data){
+                // console.log(data);
+                // console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //开关是否开启，true或者false
+                // console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                // console.log(data.othis); //得到美化后的DOM对象
+                var option={};
+                option.item="like_task";
+                option.value=data.elem.checked? "1":"0";
+                ipcRenderer.send("updateConfig",option);
+                ipcRenderer.send("addTask",{"taskname":"like_task"});
+            });
+
+            // form.on('checkbox(comment_task)', function(data){
+            //     console.log(data);
+            //     console.log(data.elem); //得到checkbox原始DOM对象
+            //     console.log(data.elem.checked); //开关是否开启，true或者false
+            //     console.log(data.value); //开关value值，也可以通过data.elem.value得到
+            //     console.log(data.othis); //得到美化后的DOM对象
+            // });
+
+        });
+    });
+</script>
+
+<script>
+
+    // layui.use('table', function(){
+    //     var table = layui.table;
+    //     table.render({
+    //         elem: '#account_tb'
+    //         ,url:'https://www.linshe.ink/electron/accountList'
+    //         ,title: '用户数据表'
+    //         ,cols: [[
+    //             {field:'id', title:'序号', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计行'}
+    //             ,{field:'wb_account', title:'帐号', width:120, edit: 'text'}
+    //             ,{field:'wb_pwd', title:'密码', width:150, edit: 'text'}
+    //             // ,{field:'experience', title:'状态', width:100, sort: true, totalRow: true}
+    //             // ,{field:'sex', title:'昵称', width:80, edit: 'text', sort: true}
+    //         ]]
+    //         ,page: true
+    //         ,response: {
+    //             statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
+    //         }
+    //         ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+    //             return {
+    //                 "code": res.status, //解析接口状态
+    //                 "msg": res.message, //解析提示文本
+    //                 "count": res.total, //解析数据长度
+    //                 "data": res.rows.item //解析数据列表
+    //             };
+    //         }
+    //     });
+    //
+    //
+    // });
+    function addAccount() {
+        layer.open({
+            title: '添加帐号'
+            ,content: '微博帐号：<input type="text" id="account" /><br />微博密码：<input type="text" id="pwd" />'
+            ,yes:function (index,layero) {
+                // console.log($("#account").val())
+                // console.log($("#pwd").val())
+                // $.ajax({
+                //     url:"https://www.linshe.ink/electron/addAccount",
+                //     type:'POST',
+                //     data:{account:$("#account").val(),pwd:$("#pwd").val()},
+                //     success:function (data) {
+                //         console.log(data);
+                //         // alert(data.msg)
+                //         //location.reload();
+                //         layer.close(index);
+                //     }
+                // });
+                var account={};
+                account.account=$("#account").val();
+                account.pwd=$("#pwd").val();
+                console.log(account);
+                ipcRenderer.send("addAccount",account);
+                layer.close(index);
+                // request('https://www.linshe.ink', function (err, response, body) {
+                //     console.log(body)
+                //     layer.close(index);
+                // });
+            }
+        });
+    }
+    function addContent() {
+        layer.open({
+            title: '添加微博内容'
+            ,content: '微博内容：<input type="text" id="weiboTxt" /><br />图片：<input type="text" id="weiboPic" />'
+            ,yes:function (index,layero) {
+                console.log($("#weiboTxt").val())
+                var account={};
+                account.content=$("#weiboTxt").val();
+                account.type="0";
+
+
+                //保存到本地：
+                ipcRenderer.send("addContent",account);
+                layer.close(index);
+            }
+        });
+    }
+    function addComment() {
+        layer.open({
+            title: '添加评论内容'
+            ,content: '微博内容：<input type="text" id="weiboTxt" /><br />图片：<input type="text" id="weiboPic" />'
+            ,yes:function (index,layero) {
+                console.log($("#weiboTxt").val())
+                var account={};
+                account.content=$("#weiboTxt").val();
+                account.type="1";
+
+
+                //保存到本地：
+                ipcRenderer.send("addContent",account);
+                layer.close(index);
+            }
+        });
+    }
+    function addWeiboUrl() {
+        layer.open({
+            title: '添加微博链接'
+            ,content: '微博链接：<input type="text" id="weiboTxt" />'
+            ,yes:function (index,layero) {
+                console.log("url:"+$("#weiboTxt").val())
+                //保存到本地：
+                ipcRenderer.send("addWeiboUrl",$("#weiboTxt").val());
+                layer.close(index);
+            }
+        });
+    }
+    function changeTab(id) {
+        layui.use('element', function(){
+            var element = layui.element;
+
+            element.tabChange('demo', id);
+        });
+
+    }
+    function login() {
+        layer.open({
+            title: '登录'
+            ,btn: ['登录']
+            ,content: '<form class="layui-form" action="">'
+                +'<div class="layui-form-item">' +
+                '    <label class="layui-form-label">用户名</label>' +
+                '    <div class="layui-input-block">' +
+                '      <input type="text" id="account" name="account" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">' +
+                '    </div>' +
+                '  </div>'+
+                '<div class="layui-form-item">' +
+                '    <label class="layui-form-label">密码</label>' +
+                '    <div class="layui-input-block">' +
+                '      <input type="password" id="pwd" name="pwd" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">' +
+                '    </div>' +
+                '  </div>'+
+                '</form>'
+            ,yes:function (index,layero) {
+                console.log($("#account").val())
+                console.log($("#pwd").val())
+                $.ajax({
+                    url:"https://www.linshe.ink/electron/addAccount",
+                    type:'POST',
+                    data:{account:$("#account").val(),pwd:$("#pwd").val()},
+                    success:function (data) {
+                        console.log(data);
+                        // alert(data.msg)
+                        //location.reload();
+                        layer.close(index);
+                    }
+                });
+            }
+        });
+    }
+    function updateConfig(item,obj) {
+        // alert(item);
+        console.log($(obj).val());
+        var option={};
+        option.item=item;
+        option.value=$(obj).val();
+        ipcRenderer.send("updateConfig",option);
+    }
+    function addTask() {
+        ipcRenderer.send("addTask",{"taskname":"this a new task"});
+    }
+
+</script>
 </body>
 </html>
